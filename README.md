@@ -28,6 +28,12 @@ To use the script, you must have Python 3 and the Pillow library installed. You 
 To generate the dataset, run the generate_dataset.py script with the following command line arguments:
 
 ```
+python generate_dataset.py
+```
+
+or
+
+```
 python generate_dataset.py --font_dir FONT_DIRECTORY --save_dir SAVE_DIRECTORY --bg_colors BG_COLORS --font_colors FONT_COLORS --font_sizes FONT_SIZES --characters CHARACTERS --num_samples NUM_SAMPLES
 ```
 The arguments are defined as follows:
@@ -47,6 +53,12 @@ The arguments are defined as follows:
 `NUM_SAMPLES`: The number of images to generate for each character.
 
 Example command:
+
+```
+python generate_dataset.py
+```
+
+or
 
 ```
 python generate_dataset.py --font_dir fonts --save_dir dataset --bg_colors 255,255,255 --font_colors 0,0,0 --font_sizes 10,14,18 --characters ሀ,ለ,ሐ,መ --num_samples 100
