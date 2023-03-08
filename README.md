@@ -54,4 +54,13 @@ python generate_dataset.py --font_dir fonts --save_dir dataset --bg_colors 255,2
 
 # License
 
-This project is licensed under the Creative Commons Attribution 4.0 International License. You are free to share and adapt the project for any purpose, even commercially, as long as you give appropriate credit and indicate any changes made.
+This dataset is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. You are free to use, share, and adapt the dataset, as long as you give appropriate credit and distribute any adaptations under the same license.
+
+Shield:
+[Creative Commons Attribution 4.0 International License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
