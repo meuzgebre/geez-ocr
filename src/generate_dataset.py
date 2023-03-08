@@ -55,7 +55,7 @@ def add_to_label(images_id: str, image_label:str) -> None:
     """
 
     # Define the directory where your files are stored
-    label_dir = "../data/label"
+    label_dir = "../data/labels"
 
     # Define the name of the CSV and JSON files you want to create
     csv_file = os.path.join(label_dir, "labels.csv")
@@ -96,8 +96,21 @@ def add_to_label(images_id: str, image_label:str) -> None:
         json.dump(file_data, file, indent=4, ensure_ascii=False)
     
 
+def apply_noise_variations(image) -> list:
+    """
+    Apply Gaussian, salt, and pepper noise to the given image and return the noisy images.
+    
+    Args:
+    - image: a PIL Image object
+    
+    Returns:
+    - a list of PIL Image objects representing the noisy images
+    """
+    # todo: Implement this method
+    pass
+
 # Add blur effect to image including Gaussian, Motion blur and other OCR-related blurs with various radii
-def apply_blur_variations(image):
+def apply_blur_variations(image) -> list:
     """
     Apply Gaussian, motion, and other OCR-related blurs to the given image and return the blurred images.
     
@@ -246,6 +259,8 @@ def main() -> None:
     # Create the save path if it doesn't exist
     if not os.path.exists(save_path):
         os.makedirs(save_path)
+
+    # todo: Implement command arguments
 
     generate_img(characters, font_dir, font_sizes, bg_colors, font_colors, save_path)
 
