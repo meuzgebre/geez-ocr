@@ -103,9 +103,7 @@ def apply_blur_variations(image):
             output_image = Image.fromarray(output_image)
 
             # Append the blurred image to the list
-            blurred_images.append(output_image)
-
-            # print(output_image)
+            blurred_images.append(output_image)            
 
     
     # Apply other OCR-related blurs
