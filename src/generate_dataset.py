@@ -33,9 +33,8 @@ def save_img(image: Image, char: str, save_dir: str) -> str:
     """
     try:
         file_name = f'{uuid.uuid4()}.png'
-        image.save(os.path.join(save_dir, file_name))
-        # todo: add to csv
-        # add_to_label(file_name, char)
+        image.save(os.path.join(save_dir, file_name))        
+        add_to_label(file_name, char)
     except IOError as e:
         print(f"ERROR: {e}")
 
@@ -54,8 +53,48 @@ def add_to_label(images_id: str, image_label:str) -> None:
     Returns:
         None.
     """
-    # todo: add image_id + image_label to csv
-    pass
+
+    # Define the directory where your files are stored
+    label_dir = "../data/label"
+
+    # Define the name of the CSV and JSON files you want to create
+    csv_file = os.path.join(label_dir, "labels.csv")
+    json_file = os.path.join(label_dir, "labels.json")
+
+    # Create the save path if it doesn't exist
+    if not os.path.exists(label_dir):
+        os.makedirs(label_dir)    
+ 
+    # Check if the CSV file already exists
+    csv_exists = os.path.exists(csv_file)
+
+    # Open the CSV file in append mode and add the new row
+    with open(csv_file, mode='a+', newline='', encoding="utf8") as file:
+        writer = csv.writer(file)
+    
+        # Write the header row if the CSV file is empty
+        if not csv_exists:
+            writer.writerow(["filename", "character"])
+    
+        # Append the new row to the CSV file
+        writer.writerow([images_id, image_label])
+
+    # Check if the JSON file already exists
+    json_exists = os.path.exists(json_file)
+
+    # Open the JSON file in append mode and add the new row
+    with open(json_file, mode='r+', encoding="utf8") as file:
+        
+        # Load the existing data from the JSON file
+        file_data = json.load(file) if os.stat(json_file).st_size != 0 else []
+        
+        # Append the new row to the JSON data
+        file_data.append({"filename": images_id, "character": image_label})
+        
+        # Write the updated JSON data back to the file
+        file.seek(0)
+        json.dump(file_data, file, indent=4, ensure_ascii=False)
+    
 
 # Add blur effect to image including Gaussian, Motion blur and other OCR-related blurs with various radii
 def apply_blur_variations(image):
@@ -193,6 +232,7 @@ def main() -> None:
 
     # Set characters to generate
     characters = "ሀሁሂሃሄህሆለሉሊላሌልሎሏሐሑሒሓሔሕሖሗመሙሚማሜምሞሟሠሡሢሣሤሥሦሧረሩሪራሬርሮሯሰሱሲሳሴስሶሷሸሹሺሻሼሽሾሿቀቁቂቃቄቅቆቈቊቋቌቍበቡቢባቤብቦቧቨቩቪቫቬቭቮቯተቱቲታቴትቶቷቸቹቺቻቼችቾቿኀኁኂኃኄኅኆኈኊኋኌኍነኑኒናኔንኖኗኘኙኚኛኜኝኞኟአኡኢኣኤእኦኧከኩኪካኬክኮኰኲኳኴኵኸኹኺኻኼኽኾወዉዊዋዌውዎዐዑዒዓዔዕዖዘዙዚዛዜዝዞዟዠዡዢዣዤዥዦዧየዩዪያዬይዮደዱዲዳዴድዶዷጀጁጂጃጄጅጆጇገጉጊጋጌግጎጐጒጓጔጕጠጡጢጣጤጥጦጧጨጩጪጫጬጭጮጯጰጱጲጳጴጵጶጷጸጹጺጻጼጽጾጿፀፁፂፃፄፅፆፈፉፊፋፌፍፎፏፐፑፒፓፔፕፖፗ‐–,፡፣፤፥፦!?.።‹›«»()\\[]፧፨፠፩፪፫፬፭፮፯፰፱፲፳፴፵፶፷፸፹፺፻"
+    # characters = "ሀ"
 
     # Set font sizes to use
     font_sizes = [12, 14, 16, 18, 20, 24, 36, 48]
