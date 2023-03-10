@@ -34,7 +34,7 @@ python generate_dataset.py
 or
 
 ```
-python generate_dataset.py --font_dir FONT_DIRECTORY --save_dir SAVE_DIRECTORY --bg_colors BG_COLORS --font_colors FONT_COLORS --font_sizes FONT_SIZES --characters CHARACTERS --num_samples NUM_SAMPLES
+python generate_dataset.py --font-dir FONT_DIRECTORY --save-dir SAVE_DIRECTORY --bg-colors BG_COLORS --font-colors FONT_COLORS --font-sizes FONT_SIZES --characters CHARACTERS --num-samples NUM_SAMPLES
 ```
 The arguments are defined as follows:
 
