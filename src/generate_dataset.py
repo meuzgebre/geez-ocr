@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
-import re
 import csv, json
 import random
+import argparse
 import uuid
 import numpy as np
 import cv2
@@ -11,7 +11,6 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # Ignore deprecation warning 
 import warnings
-# warnings.filterwarnings("ignore", category=DeprecationWarning, module="PIL.ImageDraw")
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
@@ -32,7 +31,7 @@ def save_img(image: Image, char: str, save_dir: str) -> str:
         IOError: If there is an error saving the image file.    
     """
     try:
-        file_name = f'{uuid.uuid4()}.png'
+        file_name = f"{uuid.uuid4()}.png"
         image.save(os.path.join(save_dir, file_name))        
         add_to_label(file_name, char)
     except IOError as e:
@@ -58,10 +57,10 @@ def add_to_label(images_id: str, image_label:str) -> None:
     label_dir = "../data/labels"
 
     # Define the name of the CSV and JSON files you want to create
-    csv_file = os.path.join(label_dir, "labels.csv")
-    json_file = os.path.join(label_dir, "labels.json")
+    csv_file = os.path.join(label_dir, r"labels.csv")
+    json_file = os.path.join(label_dir, r"labels.json")
 
-    # Create the save path if it doesn't exist
+    # Create the save path if it doesn"t exist
     if not os.path.exists(label_dir):
         os.makedirs(label_dir)    
  
@@ -69,7 +68,7 @@ def add_to_label(images_id: str, image_label:str) -> None:
     csv_exists = os.path.exists(csv_file)
 
     # Open the CSV file in append mode and add the new row
-    with open(csv_file, mode='a+', newline='', encoding="utf8") as file:
+    with open(csv_file, mode="a+", newline="", encoding="utf8") as file:
         writer = csv.writer(file)
     
         # Write the header row if the CSV file is empty
@@ -79,22 +78,23 @@ def add_to_label(images_id: str, image_label:str) -> None:
         # Append the new row to the CSV file
         writer.writerow([images_id, image_label])
 
-    # Check if the JSON file already exists
-    json_exists = os.path.exists(json_file)
+    # Writting to json file
 
-    # Open the JSON file in append mode and add the new row
-    with open(json_file, mode='r+', encoding="utf8") as file:
-        
-        # Load the existing data from the JSON file
-        file_data = json.load(file) if os.stat(json_file).st_size != 0 else []
-        
-        # Append the new row to the JSON data
-        file_data.append({"filename": images_id, "character": image_label})
-        
-        # Write the updated JSON data back to the file
-        file.seek(0)
-        json.dump(file_data, file, indent=4, ensure_ascii=False)
-    
+    # Check if the file exists, if not create it
+    if not os.path.exists(json_file):
+        with open(json_file, "w") as file:
+            json.dump([], file)
+
+    # Load the JSON file
+    with open(json_file, "r") as file:
+        data = json.load(file)
+
+    # Add a new item to the list
+    data.append({"filename": images_id, "character": image_label})
+
+    # Save the updated data to the file
+    with open(json_file, "w") as file:
+        json.dump(data, file)
 
 def apply_noise_variations(image) -> list:
     """
@@ -108,6 +108,7 @@ def apply_noise_variations(image) -> list:
     """
     # todo: Implement this method
     pass
+
 
 # Add blur effect to image including Gaussian, Motion blur and other OCR-related blurs with various radii
 def apply_blur_variations(image) -> list:
@@ -165,6 +166,7 @@ def apply_blur_variations(image) -> list:
         
     return blurred_images
 
+
 # Make variations of each image from generated images
 def make_variation(image: Image, char: str, save_path: str) -> None:
     """
@@ -176,10 +178,10 @@ def make_variation(image: Image, char: str, save_path: str) -> None:
         save_path (str): The path to save the image to.
 
     Returns:
-        None: This function doesn't return anything. The generated images are saved to the specified directory.
+        None: This function doesn"t return anything. The generated images are saved to the specified directory.
 
     Raises:
-        FileNotFoundError: If the font directory specified by `font_path` doesn't exist.
+        FileNotFoundError: If the font directory specified by `font_path` doesn"t exist.
     """
     # todo: make variation and for each variation call save() method 
     # save_img(image, char, save_path)
@@ -213,7 +215,7 @@ def generate_img(characters, font_dir, font_sizes, bg_colors, font_colors, save_
     # Generate images
     for font_file in os.listdir(font_dir):
 
-        if font_file.endswith('.ttf'):
+        if font_file.endswith(".ttf"):
             font_path = os.path.join(font_dir, font_file)
             font = ImageFont.truetype(font_path, random.choice(font_sizes))
 
@@ -223,7 +225,7 @@ def generate_img(characters, font_dir, font_sizes, bg_colors, font_colors, save_
 
                     for font_color in font_colors:
 
-                        image = Image.new('RGB', (30, 30), bg_color)
+                        image = Image.new("RGB", (30, 30), bg_color)
                         draw = ImageDraw.Draw(image)
 
                         # Calculate the size of the text and the position to center it
@@ -231,17 +233,17 @@ def generate_img(characters, font_dir, font_sizes, bg_colors, font_colors, save_
                         text_x = (30 - text_size[0]) // 2
                         text_y = (30 - text_size[1]) // 2
                         draw.text((text_x, text_y), char, font=font, fill=font_color)                        
-                        # file_name = f'{uuid.uuid4()}.png'
+                        # file_name = f"{uuid.uuid4()}.png"
                         # image.save(os.path.join(save_path, file_name))
                         # save_img(save_path, image)
                         make_variation(image, char, save_path)
 
 def main() -> None:
     # Define the path to save the generated images
-    save_path = '../data/raw'
+    save_path = "../data/raw"
 
     # Set font directory path
-    font_dir = '../fonts'
+    font_dir = "../fonts"
 
     # Set characters to generate
     characters = "ሀሁሂሃሄህሆለሉሊላሌልሎሏሐሑሒሓሔሕሖሗመሙሚማሜምሞሟሠሡሢሣሤሥሦሧረሩሪራሬርሮሯሰሱሲሳሴስሶሷሸሹሺሻሼሽሾሿቀቁቂቃቄቅቆቈቊቋቌቍበቡቢባቤብቦቧቨቩቪቫቬቭቮቯተቱቲታቴትቶቷቸቹቺቻቼችቾቿኀኁኂኃኄኅኆኈኊኋኌኍነኑኒናኔንኖኗኘኙኚኛኜኝኞኟአኡኢኣኤእኦኧከኩኪካኬክኮኰኲኳኴኵኸኹኺኻኼኽኾወዉዊዋዌውዎዐዑዒዓዔዕዖዘዙዚዛዜዝዞዟዠዡዢዣዤዥዦዧየዩዪያዬይዮደዱዲዳዴድዶዷጀጁጂጃጄጅጆጇገጉጊጋጌግጎጐጒጓጔጕጠጡጢጣጤጥጦጧጨጩጪጫጬጭጮጯጰጱጲጳጴጵጶጷጸጹጺጻጼጽጾጿፀፁፂፃፄፅፆፈፉፊፋፌፍፎፏፐፑፒፓፔፕፖፗ‐–,፡፣፤፥፦!?.።‹›«»()\\[]፧፨፠፩፪፫፬፭፮፯፰፱፲፳፴፵፶፷፸፹፺፻"
@@ -256,13 +258,66 @@ def main() -> None:
     # Set font colors to use
     font_colors = [(0, 0, 0), (50, 50, 50), (100, 100, 100)]
 
-    # Create the save path if it doesn't exist
+    # Create the save path if it doesn"t exist
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    # todo: Implement command arguments
+    # Define default values for all arguments
+    default_args = {
+        "save_path" : save_path,
+        "font_dir" : font_dir,
+        "characters" : characters,        
+        "font_sizes" : font_sizes,
+        "bg_colors" : bg_colors,
+        "font_colors" : font_colors,
+        "num_images": 1000
+    }
 
-    generate_img(characters, font_dir, font_sizes, bg_colors, font_colors, save_path)
+    # Command line arguments
+    parser = argparse.ArgumentParser(description="Generate OCR dataset using sets of fonts")
+    
+    parser.add_argument("--font-dir", type=str, required=False,
+                        help="Directory containing fonts")
+    parser.add_argument("--output-dir", type=str, required=False,
+                        help="Directory to save generated images")
+    parser.add_argument("--font-sizes", type=list, required=False,
+                        help="Comma-separated list of font sizes to use")
+    parser.add_argument("--bg-colors", type=list, required=False,
+                        help="Comma-separated list of background colors to use, in the format (R,G,B)")
+    parser.add_argument("--font-colors", type=list, required=False,
+                        help="Comma-separated list of font colors to use, in the format (R,G,B)")
+    parser.add_argument("--characters", type=str, required=False,
+                        help="Comma-separated list of characters to generate")
+    parser.add_argument("--num-images", type=int, required=False,
+                        help="Number of images to generate for each font, size, and color combination")
+    args = parser.parse_args()
+
+    # Check for passed arguments
+    if args.font_dir is None or args.output_dir is None or args.bg_colors is None or args.font_colors is None or args.characters is None:        
+
+        # Update the default arguments with user-provided values
+        for arg_name, arg_value in vars(args).items():
+            if arg_value is not None:
+                default_args[arg_name] = arg_value
+        
+        generate_img(
+            default_args['characters'], 
+            default_args['font_dir'], 
+            default_args['font_sizes'], 
+            default_args['bg_colors'], 
+            default_args['font_colors'], 
+            default_args['save_path']
+            )        
+    else:
+        generate_img(
+            default_args['characters'], 
+            default_args['font_dir'], 
+            default_args['font_sizes'], 
+            default_args['bg_colors'], 
+            default_args['font_colors'], 
+            default_args['save_path']
+            )        
+
 
 if __name__ == "__main__":
     main()
