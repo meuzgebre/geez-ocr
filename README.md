@@ -61,7 +61,7 @@ python generate_dataset.py
 or
 
 ```
-python generate_dataset.py --font_dir fonts --save_dir dataset --bg_colors 255,255,255 --font_colors 0,0,0 --font_sizes 10,14,18 --characters ሀ,ለ,ሐ,መ --num_samples 100
+python generate_dataset.py --font-dir ../fonts --save-dir ../data/raw --bg-colors [(255, 255, 255), (200, 200, 200), (150, 150, 150)] --font-colors [(0, 0, 0), (50, 50, 50), (100, 100, 100)] --font-sizes [12, 14, 16, 18] --characters ሀሁሂሃሄህሆለሉሊላሌልሎሏ --num-samples 1000
 ```
 
 # License
