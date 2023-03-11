@@ -33,7 +33,7 @@ To generate the dataset, run the generate_dataset.py script with the following c
 
 3. Run one of the example commands - ```python generate_dataset.py```
 
-or
+### List of avilable arguments
 
 ```
 python generate_dataset.py --font-dir FONT_DIRECTORY --save-dir SAVE_DIRECTORY --bg-colors BG_COLORS --font-colors FONT_COLORS --font-sizes FONT_SIZES --characters CHARACTERS --num-samples NUM_SAMPLES
