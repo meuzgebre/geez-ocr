@@ -27,9 +27,11 @@ To use the script, you must have Python 3 and the Pillow library installed. You 
 
 To generate the dataset, run the generate_dataset.py script with the following command line arguments:
 
-```
-python generate_dataset.py
-```
+1. Clone this repo - ```git clone https://github.com/meuzgebre/geez-ocr```
+
+2. cd geez-ocr/src/
+
+3. Run one of the example commands - ```python generate_dataset.py```
 
 or
 
