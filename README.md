@@ -40,19 +40,19 @@ python generate_dataset.py --font-dir FONT_DIRECTORY --save-dir SAVE_DIRECTORY -
 ```
 The arguments are defined as follows:
 
-`FONT_DIRECTORY`: The path to the directory containing the font files.
+`FONT-DIRECTORY`: The path to the directory containing the font files.
 
-`SAVE_DIRECTORY`: The path to the directory where the generated images will be saved.
+`SAVE-DIRECTORY`: The path to the directory where the generated images will be saved.
 
-`BG_COLORS`: A comma-separated list of background colors in RGB format (e.g. 255,255,255).
+`BG-COLORS`: A comma-separated list of background colors in RGB format (e.g. 255,255,255).
 
-`FONT_COLORS`: A comma-separated list of font colors in RGB format (e.g. 0,0,0).
+`FONT-COLORS`: A comma-separated list of font colors in RGB format (e.g. 0,0,0).
 
-`FONT_SIZES`: A comma-separated list of font sizes.
+`FONT-SIZES`: A comma-separated list of font sizes.
 
 `CHARACTERS`: A string of the characters to generate images for.
 
-`NUM_SAMPLES`: The number of images to generate for each character.
+`NUM-SAMPLES`: The number of images to generate for each character.
 
 Example command:
 
